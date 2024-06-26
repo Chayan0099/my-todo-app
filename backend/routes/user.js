@@ -16,9 +16,10 @@ router.post('/signup', async (req, res) => {
     const parsed = userSchema.safeParse(req.body); 
 
     if(!parsed.success) {
+        console.log('invalid input')
         return res.status(403).json({
             msg:'Invalid Input'
-        })
+        }) 
     }
 
     const existingUser = await User.findOne({
@@ -26,6 +27,7 @@ router.post('/signup', async (req, res) => {
     })
 
     if(existingUser){
+        console.log('user already exists')
         return res.status(403).json({
             msg:'User already exists'
         })
@@ -44,8 +46,6 @@ router.post('/signup', async (req, res) => {
 
     const token = jwt.sign({id: user._id}, JWT_SECRET);   
   
-    
-    
     res.json({
         token:token,
         msg:"User created successfully"
