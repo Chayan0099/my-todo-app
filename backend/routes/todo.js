@@ -81,9 +81,15 @@ router.delete('/delete', authMiddleware, async (req, res) => {
 
 router.get('/todos', authMiddleware, async (req, res) => {
     const todos = await Todo.find({ userId: req.userId }) 
+    if (todos){
     res.json({
         todos: todos 
-    })
+    })}
+    else {
+        return res.json({
+            msg:"No todos"
+        })
+    }
 })
 
 module.exports = router; 

@@ -9,22 +9,22 @@ function Dashboard() {
 }
 
 function Todos(){
+    const [todos, setTodos] = useState([]); 
     const getTodo = async () => {
         const response = await axios.get('http://localhost:3000/api/v1/todo/todos', {
             headers: {
-                authorization: 'Bearer' + localStorage.getItem('token') 
+                'authorization': 'Bearer' + localStorage.getItem('token') 
             }
         })
-        return response.data.todos;  
-    }
 
-    const todos = getTodo(); 
-    if (todos) {
-        return todos.map(todo => <SingleTodos todo={todo}></SingleTodos>)
-    }
-    else {
-        return <did></did>
-    }
+        setTodos(response.data.todos); 
+    } 
+    if (!todos.length) {
+        return <div>No Todos Available</div>   }
+    return (
+        todos.map(todo => <SingleTodos todo={todo}></SingleTodos>)
+
+    )
 }
 
 function SingleTodos({todo}) {
@@ -43,7 +43,7 @@ function SingleTodos({todo}) {
 
 function CreateTodo() {
     return <div>
-
+        <button></button>
     </div>
 }
 
